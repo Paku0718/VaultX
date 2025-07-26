@@ -2,8 +2,8 @@ package com.yourbank.bank_app.controller;
 
 import com.yourbank.bank_app.dto.AuthRequest;
 import com.yourbank.bank_app.dto.AuthResponse;
-import com.yourbank.bank_app.entity.Customer;
-import com.yourbank.bank_app.repository.CustomerRepository;
+import com.yourbank.bank_app.entity.User;
+import com.yourbank.bank_app.repository.UserRepository;
 import com.yourbank.bank_app.service.CustomUserDetailsService;
 import com.yourbank.bank_app.utils.JwtUtil;
 import lombok.RequiredArgsConstructor;
@@ -27,11 +27,11 @@ public class AuthController {
     private final AuthenticationManagerBuilder authManagerBuilder;
     private final JwtUtil jwtUtil;
     private final CustomUserDetailsService userDetailsService;
-    private final CustomerRepository customerRepo;
+    private final UserRepository customerRepo;
     private final PasswordEncoder passwordEncoder;
 
     @PostMapping("/register")
-    public ResponseEntity<String> register(@RequestBody Customer customer) {
+    public ResponseEntity<String> register(@RequestBody User customer) {
         customer.setPassword(passwordEncoder.encode(customer.getPassword()));
         customer.setBalance(0.0);
         customer.setAccountNumber("AC" + System.currentTimeMillis());
