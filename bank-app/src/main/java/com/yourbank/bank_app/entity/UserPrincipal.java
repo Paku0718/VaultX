@@ -1,34 +1,30 @@
 package com.yourbank.bank_app.entity;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.List;
 
-@Data
 @AllArgsConstructor
 public class UserPrincipal implements UserDetails {
 
-    private final User customer;
+    private final User user;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        // 🟢 Dynamic Role Assignment
-        return List.of(new SimpleGrantedAuthority("ROLE_" + customer.getRole().name()));
+        return List.of(() -> "ROLE_" + user.getRole());
     }
 
     @Override
     public String getPassword() {
-        return customer.getPassword();
+        return user.getPassword();
     }
 
     @Override
     public String getUsername() {
-        return customer.getEmail();
+        return user.getEmail();
     }
 
     @Override
